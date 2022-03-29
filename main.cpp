@@ -102,7 +102,18 @@ namespace
   {
     ///////////////////////// TO-DO (1) //////////////////////////////
       /// Implement the algorithm above.
-
+      if (quantity == 1) {                     // base case
+        working_cart.push(broken_cart.top());
+        broken_cart.pop();
+        trace(broken_cart, working_cart, spare_cart);
+        return;
+      }
+      carefully_move_books(quantity - 1, broken_cart, spare_cart, working_cart);
+      working_cart.push(broken_cart.top());
+      broken_cart.pop();
+      trace(broken_cart, working_cart, spare_cart);
+      carefully_move_books(quantity - 1, spare_cart, working_cart, broken_cart);
+    
     /////////////////////// END-TO-DO (1) ////////////////////////////
   }
 
@@ -116,7 +127,11 @@ namespace
       /// cart while ensuring the breakable books are always on top of the nonbreakable books, just like they already are in the
       /// "from" cart.  That is, call the above carefully_move_books function to start moving books recursively.  Call the above
       /// trace function just before calling carefully_move_books to get a starting point reference in the movement report.
-
+      std::stack<Book> spare_cart;
+      // trace first
+      trace(from, to, spare_cart);
+      // call helper
+      carefully_move_books(from.size(), from, to, spare_cart);
     /////////////////////// END-TO-DO (2) ////////////////////////////
   }
 }    // namespace
@@ -130,7 +145,7 @@ int main( int argc, char * argv[] )
   // Snag an empty cart as I enter the grocery store
   ///////////////////////// TO-DO (3) //////////////////////////////
     /// Create an empty book cart as a stack of books and call it myCart.
-
+  std::stack<Book> myCart;
   /////////////////////// END-TO-DO (3) ////////////////////////////
 
 
@@ -148,7 +163,19 @@ int main( int argc, char * argv[] )
     ///      0140444300       Les Mis             any
     ///      9780399576775    Eat pray love       Asher
     ///      9780545310581    Hunger Games        any                     <===  heaviest book, put this on the bottom
-
+    
+    // create books to hold info above
+    Book a("9780545310581", "Hunger Games", "Suzanne Collins");
+    Book b("9780399576775", "Eat pray love", "Asher");
+    Book c("0140444300", "Les Mis", "Victor Hugo");
+    Book d("54782169785", "131 Answer Key", "Thomas Bettens");
+    Book e("9780895656926", "Like the Animals", "Destiny Bonillas");
+    // push books onto stack
+    myCart.push(a);
+    myCart.push(b);
+    myCart.push(c);
+    myCart.push(d);
+    myCart.push(e);
   /////////////////////// END-TO-DO (4) ////////////////////////////
 
 
@@ -158,7 +185,12 @@ int main( int argc, char * argv[] )
   ///////////////////////// TO-DO (5) //////////////////////////////
     /// Create an empty book cart as a stack of books and call it workingCart.  Then carefully move the books in your now broken
     /// cart to this working cart by calling the above carefully_move_books function with two arguments.
-
+    
+    // empty cart
+    std::stack<Book> workingCart;
+    // move contents
+    carefully_move_books(myCart, workingCart);
+      std::cout << workingCart.size();
   /////////////////////// END-TO-DO (5) ////////////////////////////
 
 
@@ -168,6 +200,16 @@ int main( int argc, char * argv[] )
   ///////////////////////// TO-DO (6) //////////////////////////////
     /// Create an empty checkout counter as a queue of books and call it checkoutCounter.  Then remove the books
     /// from your working cart and place them on the checkout counter, i.e., put them in this checkoutCounter queue.
+  
+    // empty queue
+    std::queue<Book> checkoutCounter;
+    // place working cart books in checkoutCounter queue
+
+    while (!workingCart.empty()) {
+      checkoutCounter.push(workingCart.top());
+      workingCart.pop();
+    }
+
 
   /////////////////////// END-TO-DO (6) ////////////////////////////
 
@@ -184,7 +226,13 @@ int main( int argc, char * argv[] )
     /// found in the database then accumulate the amount due and print the book's full description and price on the receipt (i.e.
     /// write the book's full description and price to standard output).  Otherwise, print a message on the receipt that a
     /// description and price for the book wasn't found and there will be no charge.
-
+    Book book = checkoutCounter.front();
+    for(long unsigned int i = 0; i < checkoutCounter.size(); ++i) {
+      storeDataBase.find(book.isbn());
+      if (storeDataBase.find(book.isbn()) == 0) std::cout << "A description and price for the book was not found, there will be no charge.";
+      amountDue += book.price();
+    }
+    std::cout << "Book's Full Description: " << book.isbn() << book.title() << book.author() <<  " " << amountDue;
   /////////////////////// END-TO-DO (7) ////////////////////////////
 
 

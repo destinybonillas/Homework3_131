@@ -3,7 +3,14 @@
   /// Hint:  Include what you use, use what you include
   ///
   /// Do not put anything else in this section, i.e. comments, classes, functions, etc.  Only #include directives
+#include <iostream>
+#include <filesystem>
+#include <fstream>
+#include <string>
+#include <vector>
+#include <utility> // needed for move()
 
+#include "BookDatabase.hpp"
 /////////////////////// END-TO-DO (1) ////////////////////////////
 
 
@@ -54,7 +61,12 @@ BookDatabase::BookDatabase( const std::string & filename )
   ///////////////////////// TO-DO (2) //////////////////////////////
     /// Hint:  Use your Book's extraction operator to read Books, don't reinvent that here.
     ///        Read books until end of file pushing each book into the data store as they're read.
-
+    
+    //fin.open( filename, std::ios::binary );
+      fin >> book;
+      std::cout << book;
+      contents.push_back(book);
+      //std::cout << contents.size();
   /////////////////////// END-TO-DO (2) ////////////////////////////
 
   // Note:  The file is intentionally not explicitly closed.  The file is closed when fin goes out of scope - for whatever
@@ -80,5 +92,26 @@ BookDatabase::BookDatabase( const std::string & filename )
   /// Programming note:  An O(n) operation, like searching an unsorted vector, would not generally be implemented recursively.  The
   ///                    depth of recursion may be greater than the program's function call stack size.  But for this programming
   ///                    exercise, getting familiar with recursion is a goal.
+
+
+  // define find() func for public member
+  Book * BookDatabase::find(const std::string & isbn) {
+    // call the private find method
+    return find(&contents[0], isbn);
+  }
+
+  // define find() func for private member
+  Book * BookDatabase::find(Book * current, const std::string & isbn) {
+    if (isbn.empty() == current->isbn().empty()) return nullptr; // base case
+    if (current->isbn() == isbn) return current; // visit
+    int i = 0;
+    return find(&contents[i++], isbn); // recursive case
+  }
+
+  // define size() func
+  size_t BookDatabase::size() const {
+    // return number of books in data base
+    return contents.size();
+  }
 
 /////////////////////// END-TO-DO (3) ////////////////////////////

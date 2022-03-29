@@ -36,6 +36,11 @@ namespace    // unnamed, anonymous namespace
       ///           else       return false;
       ///         do this instead:
       ///           return a < b;
+      
+      // Compare floating point numbers using the absolute value and taking
+      // difference
+
+    return std::abs( lhs-rhs ) < EPSILON;
 
     /////////////////////// END-TO-DO (1) ////////////////////////////
   }
@@ -55,6 +60,14 @@ namespace    // unnamed, anonymous namespace
 Book::Book( std::string title,  std::string author,  std::string isbn,  double price )
 ///////////////////////// TO-DO (2) //////////////////////////////
 
+// Use initialization list  -- must initialize as order given from private members
+
+// could of used move(), did not, but by not using made a deep copy
+: _isbn { std::move( isbn ) },
+  _title { std::move( title ) },
+  _author { std::move( author ) },
+  _price { price }
+  {}
 /////////////////////// END-TO-DO (2) ////////////////////////////
 
 
@@ -63,7 +76,14 @@ Book::Book( std::string title,  std::string author,  std::string isbn,  double p
 // Copy constructor
 Book::Book( Book const & other )
 ///////////////////////// TO-DO (3) //////////////////////////////
-
+/* {
+  // Use Book param to attach to private member variables
+  _title = other._title;
+  _author = other._author;
+  _isbn = other._isbn;
+  _price = other._price;
+} */
+= default;
 /////////////////////// END-TO-DO (3) ////////////////////////////
 
 
@@ -72,7 +92,13 @@ Book::Book( Book const & other )
 // Move constructor
 Book::Book( Book && other ) noexcept
 ///////////////////////// TO-DO (4) //////////////////////////////
-
+  // use Book objects to move contents into private members
+/*: _isbn   (std::move(other._isbn)),
+  _title (std::move(other._title)),
+  _author (std::move(other._author)),
+  _price  (std::move(other._price))
+{}*/
+= default;
 /////////////////////// END-TO-DO (4) ////////////////////////////
 
 
@@ -81,7 +107,17 @@ Book::Book( Book && other ) noexcept
 // Copy Assignment Operator
 Book & Book::operator=( Book const & rhs ) &
 ///////////////////////// TO-DO (5) //////////////////////////////
-
+/* {
+  // if Book object not equal make equal
+  if (this != &rhs) {
+    _title = rhs._title;
+    _author = rhs._author;
+    _isbn = rhs._isbn;
+    _price = rhs._price;
+  }
+  return *this;
+} */
+= default;
 /////////////////////// END-TO-DO (5) ////////////////////////////
 
 
@@ -90,7 +126,17 @@ Book & Book::operator=( Book const & rhs ) &
 // Move Assignment Operator
 Book & Book::operator=( Book && rhs ) & noexcept
 ///////////////////////// TO-DO (6) //////////////////////////////
-
+/* {
+  // if book object not equal move them into private variables
+  if (this != &rhs) {
+  _isbn = std::move(rhs._isbn);
+  _title = std::move(rhs._title);
+  _author = std::move(rhs._author);
+  _price = std::move(rhs._price);
+  }
+  return *this;
+} */
+= default;
 /////////////////////// END-TO-DO (6) ////////////////////////////
 
 
@@ -98,7 +144,7 @@ Book & Book::operator=( Book && rhs ) & noexcept
 // Destructor
 Book::~Book() noexcept
 ///////////////////////// TO-DO (7) //////////////////////////////
-
+= default;
 /////////////////////// END-TO-DO (7) ////////////////////////////
 
 
@@ -116,7 +162,8 @@ Book::~Book() noexcept
 std::string const & Book::isbn() const &
 {
   ///////////////////////// TO-DO (8) //////////////////////////////
-
+  // accessor AKA getter, get the private variable
+  return _isbn;
   /////////////////////// END-TO-DO (8) ////////////////////////////
 }
 
@@ -127,7 +174,8 @@ std::string const & Book::isbn() const &
 std::string const & Book::title() const &
 {
   ///////////////////////// TO-DO (9) //////////////////////////////
-
+  // accessor AKA getter, get the private variable
+  return _title;
   /////////////////////// END-TO-DO (9) ////////////////////////////
 }
 
@@ -138,7 +186,8 @@ std::string const & Book::title() const &
 std::string const & Book::author() const &
 {
   ///////////////////////// TO-DO (10) //////////////////////////////
-
+  // accessor AKA getter, get the private variable
+  return _author;
   /////////////////////// END-TO-DO (10) ////////////////////////////
 }
 
@@ -148,7 +197,7 @@ std::string const & Book::author() const &
 double Book::price() const &
 {
   ///////////////////////// TO-DO (11) //////////////////////////////
-
+  return _price;
   /////////////////////// END-TO-DO (11) ////////////////////////////
 }
 
@@ -159,7 +208,7 @@ double Book::price() const &
 std::string Book::isbn() &&
 {
   ///////////////////////// TO-DO (12) //////////////////////////////
-
+  return std::move(_isbn);
   /////////////////////// END-TO-DO (12) ////////////////////////////
 }
 
@@ -170,7 +219,7 @@ std::string Book::isbn() &&
 std::string Book::title() &&
 {
   ///////////////////////// TO-DO (13) //////////////////////////////
-
+  return std::move(_title);
   /////////////////////// END-TO-DO (13) ////////////////////////////
 }
 
@@ -181,7 +230,7 @@ std::string Book::title() &&
 std::string Book::author() &&
 {
   ///////////////////////// TO-DO (14) //////////////////////////////
-
+  return std::move(_author);
   /////////////////////// END-TO-DO (14) ////////////////////////////
 }
 
@@ -200,7 +249,9 @@ std::string Book::author() &&
 Book & Book::isbn( std::string newIsbn ) &
 {
   ///////////////////////// TO-DO (15) //////////////////////////////
-
+  // move new string into private member and return that
+  _isbn = std::move(newIsbn);
+  return *this;
   /////////////////////// END-TO-DO (15) ////////////////////////////
 }
 
@@ -211,7 +262,9 @@ Book & Book::isbn( std::string newIsbn ) &
 Book & Book::title( std::string newTitle ) &
 {
   ///////////////////////// TO-DO (16) //////////////////////////////
-
+  // move new string into private member and return that
+  _title = std::move(newTitle);
+  return *this;
   /////////////////////// END-TO-DO (16) ////////////////////////////
 }
 
@@ -222,7 +275,9 @@ Book & Book::title( std::string newTitle ) &
 Book & Book::author( std::string newAuthor ) &
 {
   ///////////////////////// TO-DO (17) //////////////////////////////
-
+  // move new string into private member and return that
+  _author = std::move(newAuthor);
+  return *this;
   /////////////////////// END-TO-DO (17) ////////////////////////////
 }
 
@@ -233,7 +288,8 @@ Book & Book::author( std::string newAuthor ) &
 Book & Book::price( double newPrice ) &
 {
   ///////////////////////// TO-DO (18) //////////////////////////////
-
+  _price = newPrice;
+  return *this;
   /////////////////////// END-TO-DO (18) ////////////////////////////
 }
 
@@ -278,7 +334,28 @@ std::weak_ordering Book::operator<=>( const Book & rhs ) const noexcept
   // (sorted) by ISBN, author, title, then price.
 
   ///////////////////////// TO-DO (19) //////////////////////////////
+  
+  if (auto result = _isbn <=> rhs._isbn; result != 0) return result;
 
+  if (auto result = _author <=> rhs._author; result != 0) return result;
+
+  if (auto result = _title <=> rhs._title; result != 0) return result;
+
+  if (floating_point_is_equal(_price, rhs._price)) return std::weak_ordering::equivalent;
+  if (_price < rhs._price) return std::weak_ordering::less;
+  else                     return std::weak_ordering::greater;
+
+
+  /*if ( _isbn == rhs._isbn ) {
+   return _isbn <=> rhs._isbn;
+  } else if (_author == rhs._author) {
+    return _author <=> rhs._author;
+  } else if (_title == rhs._title) 
+    return _title <=> rhs._title;
+   else if (floating_point_is_equal(_price, rhs._price))
+    return floating_point_is_equal(_price, rhs._price) <=> floating_point_is_equal(_price, rhs._price);*/
+  
+  
   /////////////////////// END-TO-DO (19) ////////////////////////////
 }
 
@@ -292,6 +369,12 @@ bool Book::operator==( const Book & rhs ) const noexcept
   // and then the most likely to be different first.
 
   ///////////////////////// TO-DO (20) //////////////////////////////
+  // check equality of all items 
+  
+  return floating_point_is_equal(_price, rhs._price)
+         &&           _isbn == rhs._isbn
+         &&           _title == rhs._title
+         &&           _author == rhs._author;
 
   /////////////////////// END-TO-DO (20) ////////////////////////////
 }
@@ -328,6 +411,23 @@ std::istream & operator>>( std::istream & stream, Book & book )
     ///        1) https://en.cppreference.com/w/cpp/io/manip/quoted
     ///        2) https://www.youtube.com/watch?v=Mu-GUZuU31A
 
+    // use branch to pass by white space, and make sure each item and comma is read in
+
+    Book temp;
+    char is_comma = ',';
+
+    if (stream >> std::ws >> std::quoted(temp._isbn) && stream >> std::ws >> is_comma && is_comma == ',' && 
+        stream >> std::ws >> std::quoted(temp._title) && stream >> std::ws >> is_comma && is_comma == ',' &&
+        stream >> std::ws >> std::quoted(temp._author) && stream >> std::ws >> is_comma && is_comma == ',' &&
+        stream >> std::ws >>             temp._price )
+    {
+      // if all above is true then more the temp varibale into the users BOok
+      book = std::move(temp);
+    }
+    else stream.setstate(std::ios::failbit);
+
+  return stream;
+
   /////////////////////// END-TO-DO (21) ////////////////////////////
 }
 
@@ -339,6 +439,17 @@ std::ostream & operator<<( std::ostream & stream, const Book & book )
 {
   ///////////////////////// TO-DO (22) //////////////////////////////
     /// This function should be symmetrical with operator>> above.  Read what your write, and write what you read
+    // set delimiter (thing that separates) to , and white space 
+    // return the itemss using extraction operator
+    const std::string delimiter = ", ";
+    stream << std::quoted(book.isbn()) 
+           << delimiter
+           << std::quoted(book.title())
+           << delimiter
+           << std::quoted(book.author())
+           << delimiter
+           << book.price();
 
+           return stream;
   /////////////////////// END-TO-DO (22) ////////////////////////////
 }

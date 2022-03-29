@@ -5,7 +5,10 @@
   /// Hint:  Include what you use, use what you include
   ///
   /// Do not put anything else in this section, i.e. comments, classes, functions, etc.  Only #include directives
-
+#include <string>
+#include <vector>
+#include <fstream>
+#include "Book.hpp"
 /////////////////////// END-TO-DO (1) ////////////////////////////
 
 
@@ -32,5 +35,12 @@ class BookDatabase
       /// Private implementation details
       /// Add any necessary private helper functions, member attributes, etc.
 
+    // find function private helper
+    Book * find(Book * current, const std::string & isbn);
+
+    // memory resident data stored w/ standard vector
+    std::vector<Book> contents;
+
+    Book book;
     /////////////////////// END-TO-DO (2) ////////////////////////////
 };
