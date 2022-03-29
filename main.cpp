@@ -190,7 +190,6 @@ int main( int argc, char * argv[] )
     std::stack<Book> workingCart;
     // move contents
     carefully_move_books(myCart, workingCart);
-      std::cout << workingCart.size();
   /////////////////////// END-TO-DO (5) ////////////////////////////
 
 
@@ -226,13 +225,16 @@ int main( int argc, char * argv[] )
     /// found in the database then accumulate the amount due and print the book's full description and price on the receipt (i.e.
     /// write the book's full description and price to standard output).  Otherwise, print a message on the receipt that a
     /// description and price for the book wasn't found and there will be no charge.
-    Book book = checkoutCounter.front();
-    for(long unsigned int i = 0; i < checkoutCounter.size(); ++i) {
-      storeDataBase.find(book.isbn());
-      if (storeDataBase.find(book.isbn()) == 0) std::cout << "A description and price for the book was not found, there will be no charge.";
-      amountDue += book.price();
+    while (!checkoutCounter.empty()) {
+      if (storeDataBase.find(checkoutCounter.front().isbn()) == 0) {
+        amountDue += checkoutCounter.front().price();
+        std::cout << "\n" << checkoutCounter.front().isbn() << " " << checkoutCounter.front().title() << " " << checkoutCounter.front().author() << " " << checkoutCounter.front().price() << "\n";
+        checkoutCounter.pop();
+      } else {
+        std::cout << " A description and price for that book was not found. You will not be charged.\n";
+      }
     }
-    std::cout << "Book's Full Description: " << book.isbn() << book.title() << book.author() <<  " " << amountDue;
+
   /////////////////////// END-TO-DO (7) ////////////////////////////
 
 

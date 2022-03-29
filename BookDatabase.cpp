@@ -63,10 +63,14 @@ BookDatabase::BookDatabase( const std::string & filename )
     ///        Read books until end of file pushing each book into the data store as they're read.
     
     //fin.open( filename, std::ios::binary );
-      fin >> book;
-      std::cout << book;
-      contents.push_back(book);
+      //fin >> book;
+      while(fin >> book) {
+        std::cout << book;
+        contents.push_back(book);
+      }
+      //std::cout << "HERE\n";
       //std::cout << contents.size();
+      //std::cout << "HERE\n";
   /////////////////////// END-TO-DO (2) ////////////////////////////
 
   // Note:  The file is intentionally not explicitly closed.  The file is closed when fin goes out of scope - for whatever
