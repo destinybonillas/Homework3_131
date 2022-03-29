@@ -65,12 +65,9 @@ BookDatabase::BookDatabase( const std::string & filename )
     //fin.open( filename, std::ios::binary );
       //fin >> book;
       while(fin >> book) {
-        std::cout << book;
+        std::cout << book << "\n";
         contents.push_back(book);
       }
-      //std::cout << "HERE\n";
-      //std::cout << contents.size();
-      //std::cout << "HERE\n";
   /////////////////////// END-TO-DO (2) ////////////////////////////
 
   // Note:  The file is intentionally not explicitly closed.  The file is closed when fin goes out of scope - for whatever
@@ -101,15 +98,15 @@ BookDatabase::BookDatabase( const std::string & filename )
   // define find() func for public member
   Book * BookDatabase::find(const std::string & isbn) {
     // call the private find method
-    return find(&contents[0], isbn);
+    return find(&contents.front(), isbn);
   }
 
   // define find() func for private member
   Book * BookDatabase::find(Book * current, const std::string & isbn) {
-    if (isbn.empty() == current->isbn().empty()) return nullptr; // base case
+    if (isbn.empty() == current->isbn().empty() /*current == nullptr*/) return nullptr; // base case
     if (current->isbn() == isbn) return current; // visit
     int i = 0;
-    return find(&contents[i++], isbn); // recursive case
+    return find(&contents[++i], isbn); // recursive case
   }
 
   // define size() func

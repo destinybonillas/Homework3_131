@@ -165,11 +165,11 @@ int main( int argc, char * argv[] )
     ///      9780545310581    Hunger Games        any                     <===  heaviest book, put this on the bottom
     
     // create books to hold info above
-    Book a("9780545310581", "Hunger Games", "Suzanne Collins");
-    Book b("9780399576775", "Eat pray love", "Asher");
-    Book c("0140444300", "Les Mis", "Victor Hugo");
-    Book d("54782169785", "131 Answer Key", "Thomas Bettens");
-    Book e("9780895656926", "Like the Animals", "Destiny Bonillas");
+    Book a("9780545310581", "Hunger Games", "Suzanne Collins", 67.56);
+    Book b("9780399576775", "Eat pray love", "Asher", 36.99);
+    Book c("0140444300", "Les Mis", "Victor Hugo", 28.96);
+    Book d("54782169785", "131 Answer Key", "");
+    Book e("9780895656926", "Like the Animals", "Ready for Life", 41.97);
     // push books onto stack
     myCart.push(a);
     myCart.push(b);
@@ -228,7 +228,7 @@ int main( int argc, char * argv[] )
     while (!checkoutCounter.empty()) {
       if (storeDataBase.find(checkoutCounter.front().isbn()) == 0) {
         amountDue += checkoutCounter.front().price();
-        std::cout << "\n" << checkoutCounter.front().isbn() << " " << checkoutCounter.front().title() << " " << checkoutCounter.front().author() << " " << checkoutCounter.front().price() << "\n";
+        std::cout << "\n" << std::quoted(checkoutCounter.front().title()) << " " << std::quoted(checkoutCounter.front().author()) << " " << std::quoted(checkoutCounter.front().isbn()) << " " << checkoutCounter.front().price() << "\n";
         checkoutCounter.pop();
       } else {
         std::cout << " A description and price for that book was not found. You will not be charged.\n";
