@@ -103,8 +103,8 @@ BookDatabase::BookDatabase( const std::string & filename )
 
   // define find() func for private member
   Book * BookDatabase::find(Book * current, const std::string & isbn) {
-    if (isbn.empty() == current->isbn().empty() /*current == nullptr*/) return nullptr; // base case
-    if (current->isbn() == isbn) return current; // visit
+    if (/*isbn.empty() == current->isbn().empty()*/ current == nullptr) return nullptr; // base case
+    if (isbn == current->isbn()) return current; // visit
     return find(&contents[++index], isbn); // recursive case
   }
 

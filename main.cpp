@@ -227,6 +227,7 @@ int main( int argc, char * argv[] )
     /// found in the database then accumulate the amount due and print the book's full description and price on the receipt (i.e.
     /// write the book's full description and price to standard output).  Otherwise, print a message on the receipt that a
     /// description and price for the book wasn't found and there will be no charge.
+
     while (!checkoutCounter.empty()) {
       if (storeDataBase.find(checkoutCounter.front().isbn()) == 0) {
         amountDue += checkoutCounter.front().price();
