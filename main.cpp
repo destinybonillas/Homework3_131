@@ -165,17 +165,19 @@ int main( int argc, char * argv[] )
     ///      9780545310581    Hunger Games        any                     <===  heaviest book, put this on the bottom
     
     // create books to hold info above
-    Book a("9780545310581", "Hunger Games", "Suzanne Collins", 67.56);
-    Book b("9780399576775", "Eat pray love", "Asher", 36.99);
-    Book c("0140444300", "Les Mis", "Victor Hugo", 28.96);
-    Book d("54782169785", "131 Answer Key", "");
-    Book e("9780895656926", "Like the Animals", "Ready for Life", 41.97);
+    Book a("Hunger Games", "Suzanne Collins", "9780545310581", 67.56);
+    Book b("Eat pray love", "Asher", "9780399576775", 36.99);
+    Book c("Les Mis", "Victor Hugo", "0140444300", 28.96);
+    Book d("131 Answer Key", "Bettens", "54782169785");
+    Book e("Like the Animals", "Ready for Life", "9780895656926", 41.97);
+    //Book f("0001034359", "Tales of Hans Christian Anderson ; read by Michael Redgrave. (1st edition)", "Hans Christian Anderson", 99.92);
     // push books onto stack
     myCart.push(a);
     myCart.push(b);
     myCart.push(c);
     myCart.push(d);
     myCart.push(e);
+    //myCart.push(f);
   /////////////////////// END-TO-DO (4) ////////////////////////////
 
 

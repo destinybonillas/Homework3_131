@@ -98,15 +98,14 @@ BookDatabase::BookDatabase( const std::string & filename )
   // define find() func for public member
   Book * BookDatabase::find(const std::string & isbn) {
     // call the private find method
-    return find(&contents.front(), isbn);
+    return find(&contents[index], isbn);
   }
 
   // define find() func for private member
   Book * BookDatabase::find(Book * current, const std::string & isbn) {
     if (isbn.empty() == current->isbn().empty() /*current == nullptr*/) return nullptr; // base case
     if (current->isbn() == isbn) return current; // visit
-    int i = 0;
-    return find(&contents[++i], isbn); // recursive case
+    return find(&contents[++index], isbn); // recursive case
   }
 
   // define size() func

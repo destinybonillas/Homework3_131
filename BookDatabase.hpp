@@ -42,5 +42,7 @@ class BookDatabase
     std::vector<Book> contents;
 
     Book book;
+
+    int index = 0;
     /////////////////////// END-TO-DO (2) ////////////////////////////
 };
