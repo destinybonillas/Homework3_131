@@ -62,10 +62,8 @@ BookDatabase::BookDatabase( const std::string & filename )
     /// Hint:  Use your Book's extraction operator to read Books, don't reinvent that here.
     ///        Read books until end of file pushing each book into the data store as they're read.
     
-    //fin.open( filename, std::ios::binary );
-      //fin >> book;
       while(fin >> book) {
-        std::cout << book << "\n";
+        //std::cout << book << "\n";
         contents.push_back(book);
       }
   /////////////////////// END-TO-DO (2) ////////////////////////////
@@ -97,17 +95,18 @@ BookDatabase::BookDatabase( const std::string & filename )
 
   // define find() func for public member
   Book * BookDatabase::find(const std::string & isbn) {
-    // call the private find method
-    return find(&contents[index], isbn);
+    // call the private find method 
+    return find(&contents[0], isbn, 0);
   }
 
   // define find() func for private member
-  Book * BookDatabase::find(Book * current, const std::string & isbn) {
-    if (/*isbn.empty() == current->isbn().empty()*/ current == nullptr) return nullptr; // base case
+  Book * BookDatabase::find(Book * current, const std::string & isbn, unsigned long index) {
+    //std::cout << current->isbn() << "\n";
     if (isbn == current->isbn()) return current; // visit
-    return find(&contents[++index], isbn); // recursive case
+    if (index == contents.size()) return nullptr; // base case
+    ++index;
+    return find(&contents[index], isbn, index); // recursive case
   }
-
   // define size() func
   size_t BookDatabase::size() const {
     // return number of books in data base

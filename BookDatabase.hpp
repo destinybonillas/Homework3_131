@@ -8,6 +8,8 @@
 #include <string>
 #include <vector>
 #include <fstream>
+#include <cstddef>
+
 #include "Book.hpp"
 /////////////////////// END-TO-DO (1) ////////////////////////////
 
@@ -36,13 +38,12 @@ class BookDatabase
       /// Add any necessary private helper functions, member attributes, etc.
 
     // find function private helper
-    Book * find(Book * current, const std::string & isbn);
+    Book * find(Book * current, const std::string & isbn, unsigned long index);
 
     // memory resident data stored w/ standard vector
     std::vector<Book> contents;
 
     Book book;
 
-    int index = 0;
     /////////////////////// END-TO-DO (2) ////////////////////////////
 };

@@ -170,14 +170,12 @@ int main( int argc, char * argv[] )
     Book c("Les Mis", "Victor Hugo", "0140444300", 28.96);
     Book d("131 Answer Key", "Bettens", "54782169785");
     Book e("Like the Animals", "Ready for Life", "9780895656926", 41.97);
-    //Book f("0001034359", "Tales of Hans Christian Anderson ; read by Michael Redgrave. (1st edition)", "Hans Christian Anderson", 99.92);
     // push books onto stack
     myCart.push(a);
     myCart.push(b);
     myCart.push(c);
     myCart.push(d);
     myCart.push(e);
-    //myCart.push(f);
   /////////////////////// END-TO-DO (4) ////////////////////////////
 
 
@@ -229,12 +227,13 @@ int main( int argc, char * argv[] )
     /// description and price for the book wasn't found and there will be no charge.
 
     while (!checkoutCounter.empty()) {
-      if (storeDataBase.find(checkoutCounter.front().isbn()) == 0) {
+      if (storeDataBase.find(checkoutCounter.front().isbn()) != nullptr) {
         amountDue += checkoutCounter.front().price();
         std::cout << "\n" << std::quoted(checkoutCounter.front().title()) << " " << std::quoted(checkoutCounter.front().author()) << " " << std::quoted(checkoutCounter.front().isbn()) << " " << checkoutCounter.front().price() << "\n";
         checkoutCounter.pop();
       } else {
-        std::cout << " A description and price for that book was not found. You will not be charged.\n";
+        std::cout << "[" << checkoutCounter.front().title() << "]" << " A description and price for that book was not found. You will not be charged.\n";
+        checkoutCounter.pop();
       }
     }
 
