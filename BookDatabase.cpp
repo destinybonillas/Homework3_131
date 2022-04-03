@@ -92,7 +92,6 @@ BookDatabase::BookDatabase( const std::string & filename )
   ///                    depth of recursion may be greater than the program's function call stack size.  But for this programming
   ///                    exercise, getting familiar with recursion is a goal.
 
-
   // define find() func for public member
   Book * BookDatabase::find(const std::string & isbn) {
     // call the private find method 

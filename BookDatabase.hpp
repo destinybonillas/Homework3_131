@@ -43,6 +43,7 @@ class BookDatabase
     // memory resident data stored w/ standard vector
     std::vector<Book> contents;
 
+    // book object to store database of books
     Book book;
 
     /////////////////////// END-TO-DO (2) ////////////////////////////
