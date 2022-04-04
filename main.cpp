@@ -226,14 +226,14 @@ int main( int argc, char * argv[] )
     /// write the book's full description and price to standard output).  Otherwise, print a message on the receipt that a
     /// description and price for the book wasn't found and there will be no charge.
 
+    while (!checkoutCounter.empty()) {
     // create pointer to hold using database
     Book * full_descrip = storeDataBase.find(checkoutCounter.front().isbn());
-    while (!checkoutCounter.empty()) {
-      // accumulate price
-      amountDue += checkoutCounter.front().price();
       // if not == to null proceed
-      if (storeDataBase.find(checkoutCounter.front().isbn()) != nullptr) {
-        std::cout << "\n" << std::quoted(full_descrip->title()) << " " << std::quoted(full_descrip->author()) << " " << std::quoted(full_descrip->isbn()) << " " << full_descrip->price() << "\n";
+      if (full_descrip != nullptr) {
+        std::cout << std::quoted(full_descrip->isbn()) << ", " << std::quoted(full_descrip->title()) << ", " << std::quoted(full_descrip->author()) << ", " << full_descrip->price() << "\n";
+        // accumulate price
+        amountDue += checkoutCounter.front().price(); 
         checkoutCounter.pop();
       } else {
         std::cout << "[" << checkoutCounter.front().title() << "]" << " A description and price for that book was not found. You will not be charged.\n";
